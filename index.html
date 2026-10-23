@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Satellite | Construction & Ground Station Guide</title>
+<style>
+:root{--navy:#102440;--blue:#1769aa;--gold:#f4b942;--light:#f3f6fa;--ink:#243247;--green:#18794e}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--light);color:var(--ink);line-height:1.6}
+header{background:linear-gradient(135deg,#102440,#1769aa);color:white;padding:36px 20px;text-align:center}
+header h1{margin:0;font-size:clamp(28px,5vw,44px)}
+header p{max-width:850px;margin:12px auto}
+nav{background:#0b1930;padding:12px;text-align:center;position:sticky;top:0;z-index:5}
+nav a{color:white;text-decoration:none;margin:6px 10px;display:inline-block;font-weight:bold}
+nav a:hover{color:var(--gold)}
+main{max-width:1100px;margin:auto;padding:20px}
+section,.panel{background:white;border-radius:12px;padding:22px;margin:20px 0;box-shadow:0 3px 14px #172b4510}
+h2{color:var(--navy);margin-top:0}
+h3{color:var(--blue)}
+.hero{border-left:6px solid var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{background:#f7f9fc;border:1px solid #dbe3ee;border-radius:9px;padding:16px}
+button,.button{border:0;border-radius:7px;padding:11px 16px;background:var(--blue);color:white;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;margin:4px 3px}
+button:hover,.button:hover{background:var(--navy)}
+input,select,textarea{width:100%;padding:10px;margin:5px 0 12px;border:1px solid #bac7d8;border-radius:6px;font:inherit}
+label{font-weight:bold}
+table{border-collapse:collapse;width:100%;margin:12px 0}
+th,td{border:1px solid #d5deea;padding:9px;text-align:left}
+th{background:#eaf0f8}
+.notice{background:#fff5dc;border-left:5px solid #d89a12;padding:14px;border-radius:5px}
+.safe{background:#e8f6ee;border-left:5px solid var(--green);padding:14px;border-radius:5px}
+small,.muted{color:#59697d}
+.resource a{color:#1769aa;font-weight:bold}
+.checklist label{display:block;font-weight:normal;margin:9px 0}
+footer{text-align:center;background:#0b1930;color:white;padding:24px;margin-top:30px}
+.progress{height:12px;background:#dce5f0;border-radius:20px;overflow:hidden}
+#bar{height:100%;width:0;background:#18794e;transition:width .2s}
+@media(max-width:600px){main{padding:10px}section,.panel{padding:16px}table{font-size:13px}}
+</style>
+</head>
+<body>
+<header>
+<h1>ROYAL SATELLITE</h1>
+<p><strong>Low-Cost Satellite Construction & Ground Station Guide</strong></p>
+<p>Learn the fundamentals, plan an educational satellite prototype, estimate a project budget, and explore how to receive satellite signals.</p>
+</header>
+<nav>
+<a href="#start">Start Here</a>
+<a href="#budget">Budget Planner</a>
+<a href="#design">Satellite Design</a>
+<a href="#ground">Ground Station</a>
+<a href="#safety">Safety & Rules</a>
+<a href="#resources">Resources</a>
+</nav>
+<main>
+<section id="start" class="hero">
+<h2>Welcome to Your Satellite Project</h2>
+<p>This guide is designed for beginners, schools, hobbyists, and small organizations. Start with a receiving-only ground station, learn the systems, and then build a tabletop educational prototype.</p>
+<div class="notice"><strong>Important distinction:</strong> A tabletop prototype is not a flight-ready satellite. A satellite intended for orbit requires specialist engineering, environmental testing, launch-provider approval, spectrum coordination, and applicable regulatory authorization.</div>
+<h3>Recommended project sequence</h3>
+<div class="grid">
+<div class="card"><h3>1. Learn and Receive</h3><p>Explore satellite tracking and receive permitted signals before attempting to build hardware for orbit.</p></div>
+<div class="card"><h3>2. Build a Bench Prototype</h3><p>Use a small frame, low-voltage electronics, a simulated payload, and test instruments.</p></div>
+<div class="card"><h3>3. Test Each Subsystem</h3><p>Document power use, mass, heat, communication concepts, and failure conditions.</p></div>
+<div class="card"><h3>4. Research Flight Requirements</h3><p>Consult qualified aerospace engineers and official regulatory and launch resources.</p></div>
+</div>
+</section>
+
+<section id="budget">
+<h2>Interactive Project Budget Planner</h2>
+<p>Enter your own estimated costs. These are planning fields, not live vendor quotes.</p>
+<div class="grid">
+<div><label for="frame">Frame and structure ($)</label><input id="frame" type="number" min="0" value="40"></div>
+<div><label for="computer">Controller / computer ($)</label><input id="computer" type="number" min="0" value="60"></div>
+<div><label for="power">Power and battery test setup ($)</label><input id="power" type="number" min="0" value="35"></div>
+<div><label for="sensors">Sensors / educational payload ($)</label><input id="sensors" type="number" min="0" value="45"></div>
+<div><label for="tools">Wires, tools, and connectors ($)</label><input id="tools" type="number" min="0" value="30"></div>
+<div><label for="reserve">Contingency reserve (%)</label><input id="reserve" type="number" min="0" max="100" value="15"></div>
+</div>
+<button onclick="calculateBudget()">Calculate Prototype Budget</button>
+<div class="panel">
+<h3 id="budgetResult">Estimated total: $241.50</h3>
+<p id="budgetBreakdown">Includes the default 15% contingency reserve.</p>
+<p class="muted">Does not include labor, shipping, taxes, professional testing, launch, licensing, or flight qualification.</p>
+</div>
+<h3>Ground Station Budget</h3>
+<div class="grid">
+<div><label for="antenna">Antenna ($)</label><input id="antenna" type="number" min="0" value="35"></div>
+<div><label for="receiver">SDR / receiver ($)</label><input id="receiver" type="number" min="0" value="35"></div>
+<div><label for="cable">Cable and adapters ($)</label><input id="cable" type="number" min="0" value="15"></div>
+<div><label for="computer2">Computer ($; enter 0 if already owned)</label><input id="computer2" type="number" min="0" value="0"></div>
+</div>
+<button onclick="calculateGround()">Calculate Ground Station Budget</button>
+<h3 id="groundResult">Estimated ground station total: $85.00</h3>
+</section>
+
+<section id="design">
+<h2>Educational Satellite Design</h2>
+<p>A CubeSat is a standardized small-satellite format. The following is a conceptual learning checklist, not a flight design or construction certification.</p>
+<table>
+<thead><tr><th>Subsystem</th><th>Purpose</th><th>Beginner planning question</th></tr></thead>
+<tbody>
+<tr><td>Structure</td><td>Holds and protects components</td><td>Can the frame support components without sharp edges?</td></tr>
+<tr><td>Electrical power</td><td>Provides regulated energy</td><td>What is the expected voltage and current?</td></tr>
+<tr><td>Onboard computer</td><td>Runs software and handles data</td><td>Can the program be tested safely on a bench?</td></tr>
+<tr><td>Payload</td><td>Performs the educational experiment</td><td>What measurable result will the payload produce?</td></tr>
+<tr><td>Communications</td><td>Moves information to and from a spacecraft</td><td>Can communications be simulated or receive-only at first?</td></tr>
+<tr><td>Thermal management</td><td>Controls component temperatures</td><td>Do components remain within their rated temperatures?</td></tr>
+<tr><td>Attitude and orbit</td><td>Describes orientation and motion</td><td>Can these functions first be modeled in software?</td></tr>
+</tbody>
+</table>
+<h3>Mass and power worksheet</h3>
+<div class="grid">
+<div><label for="mass">Estimated prototype mass (grams)</label><input id="mass" type="number" min="0" value="500"></div>
+<div><label for="powerdraw">Estimated electrical load (watts)</label><input id="powerdraw" type="number" min="0" step="0.1" value="3"></div>
+<div><label for="hours">Hours of operation</label><input id="hours" type="number" min="0" step="0.5" value="4"></div>
+</div>
+<button onclick="calculateEngineering()">Calculate Energy Estimate</button>
+<p id="engineeringResult">Estimated energy use: 12 Wh. Prototype mass: 500 g.</p>
+<p class="muted">For learning and bench testing only. Flight mass limits, power budgets, battery safety, and thermal margins require mission-specific engineering review.</p>
+</section>
+
+<section id="ground">
+<h2>Build a Receiving-Only Ground Station</h2>
+<p>A receiving station lets you learn about satellite passes and radio signals without transmitting. Check signal compatibility, local rules, and the selected satellite's published receiving guidance before purchasing equipment.</p>
+<div class="grid">
+<div class="card"><h3>1. Antenna</h3><p>Select an antenna suited to the frequency, polarization, and satellite signals you intend to receive.</p></div>
+<div class="card"><h3>2. SDR or Receiver</h3><p>A software-defined radio (SDR) can turn compatible radio signals into data for computer software.</p></div>
+<div class="card"><h3>3. Coax and Adapters</h3><p>Use compatible connectors and suitable cable. Cable loss can reduce weak signals.</p></div>
+<div class="card"><h3>4. Computer</h3><p>Use an existing computer where possible. Check operating-system and device compatibility.</p></div>
+<div class="card"><h3>5. Software</h3><p>Research SatDump, Gpredict, SatNOGS, and GNU Radio. Each has different purposes and hardware requirements.</p></div>
+<div class="card"><h3>6. Tracking</h3><p>Use published orbital elements and tracking tools to plan visible passes and learn about antenna pointing.</p></div>
+</div>
+<h3>Ground Station Setup Checklist</h3>
+<div class="checklist" id="groundChecklist">
+<label><input type="checkbox"> I have identified a satellite or signal suitable for reception.</label>
+<label><input type="checkbox"> I checked the required frequency and antenna compatibility.</label>
+<label><input type="checkbox"> I checked receiver hardware and software compatibility.</label>
+<label><input type="checkbox"> I have safe antenna mounting and weather protection.</label>
+<label><input type="checkbox"> I will start with receive-only operation.</label>
+<label><input type="checkbox"> I have recorded test results and troubleshooting notes.</label>
+</div>
+<p id="checkProgress">Checklist completed: 0 of 6</p>
+<div class="progress"><div id="bar"></div></div>
+</section>
+
+<section id="milestones">
+<h2>Project Milestones</h2>
+<div class="checklist" id="projectChecklist">
+<label><input type="checkbox"> Define the educational mission and success criteria.</label>
+<label><input type="checkbox"> Research the target satellite or experiment.</label>
+<label><input type="checkbox"> Create a parts list and budget.</label>
+<label><input type="checkbox"> Build a safe tabletop mock-up.</label>
+<label><input type="checkbox"> Test power, sensors, and software separately.</label>
+<label><input type="checkbox"> Record failures, fixes, and results.</label>
+<label><input type="checkbox"> Obtain expert review before any flight proposal.</label>
+</div>
+</section>
+
+<section id="safety">
+<h2>Safety, Radio Rules, and Launch Reality</h2>
+<div class="notice"><strong>Do not transmit without authorization.</strong> Receiving radio signals and transmitting radio signals are different activities. Spacecraft and ground-station transmissions may require licenses, frequency coordination, and other approvals. Amateur radio rules do not automatically authorize every satellite or frequency.</div>
+<ul>
+<li>Never connect batteries or power supplies without checking voltage, polarity, current limits, and component ratings.</li>
+<li>Use appropriate battery protection and never leave damaged or overheating batteries unattended.</li>
+<li>Do not launch homemade hardware or attach equipment to a launch vehicle without the required provider acceptance and approvals.</li>
+<li>Actual space missions can require substantial engineering, testing, integration, insurance, licensing, and launch expenses. A low-cost classroom prototype is not a low-cost orbital mission.</li>
+<li>Before a real mission, seek qualified aerospace, spectrum, and regulatory advice.</li>
+</ul>
+</section>
+
+<section id="resources" class="resource">
+<h2>Official and Open-Source Resources</h2>
+<p>These links are starting points for further research. Check each site's current documentation and requirements.</p>
+<div class="grid">
+<div class="card"><h3>NASA CubeSat Launch Initiative</h3><p>Information about NASA's CubeSat educational and research opportunities.</p><a href="https://www.nasa.gov/kennedy/launch-services-program/cubesat-launch-initiative/" target="_blank" rel="noopener">Visit NASA CSLI</a></div>
+<div class="card"><h3>NASA Small Spacecraft Systems</h3><p>Technical information and learning resources for small spacecraft.</p><a href="https://www.nasa.gov/smallsat-institute/" target="_blank" rel="noopener">Visit NASA SmallSat Institute</a></div>
+<div class="card"><h3>NASA GMAT</h3><p>Mission analysis and trajectory design software.</p><a href="https://gmat.gsfc.nasa.gov/" target="_blank" rel="noopener">Visit GMAT</a></div>
+<div class="card"><h3>FCC</h3><p>Official US communications regulator; research applicable spectrum and satellite authorization requirements.</p><a href="https://www.fcc.gov/" target="_blank" rel="noopener">Visit FCC</a></div>
+<div class="card"><h3>ARRL</h3><p>Amateur radio education and licensing information.</p><a href="https://www.arrl.org/licensing-education-training" target="_blank" rel="noopener">Visit ARRL licensing</a></div>
+<div class="card"><h3>SatNOGS</h3><p>Open-source satellite ground-station network and related tools.</p><a href="https://satnogs.org/" target="_blank" rel="noopener">Visit SatNOGS</a></div>
+<div class="card"><h3>SatDump</h3><p>Open-source satellite signal processing and decoding software.</p><a href="https://github.com/SatDump/SatDump" target="_blank" rel="noopener">Visit SatDump</a></div>
+<div class="card"><h3>Gpredict</h3><p>Satellite tracking and pass prediction software.</p><a href="https://gpredict.oz9aec.net/" target="_blank" rel="noopener">Visit Gpredict</a></div>
+<div class="card"><h3>GNU Radio</h3><p>Open-source toolkit for software-defined radio and signal processing.</p><a href="https://www.gnuradio.org/" target="_blank" rel="noopener">Visit GNU Radio</a></div>
+</div>
+</section>
+
+<section>
+<h2>Save Your Project Notes</h2>
+<label for="notes">Mission idea, parts to research, questions, and next steps</label>
+<textarea id="notes" rows="6" placeholder="Write your project notes here."></textarea>
+<button onclick="downloadNotes()">Download Notes as Text</button>
+<p class="muted">Notes are kept in this page while it remains open. Download a copy before closing the page.</p>
+</section>
+</main>
+<footer>
+<p><strong>ROYAL SATELLITE</strong></p>
+<p>Educational planning resource • Prototype-first • Safety-first</p>
+<p>All budget amounts are illustrative estimates, not supplier quotes or engineering certification.</p>
+</footer>
+<script>
+function numberValue(id){const n=Number(document.getElementById(id).value);return Number.isFinite(n)&&n>0?n:0}
+function money(n){return n.toLocaleString('en-US',{style:'currency',currency:'USD'})}
+function calculateBudget(){
+const base=['frame','computer','power','sensors','tools'].reduce((s,id)=>s+numberValue(id),0);
+const reserve=Math.min(100,numberValue('reserve'));
+const total=base*(1+reserve/100);
+document.getElementById('budgetResult').textContent='Estimated total: '+money(total);
+document.getElementById('budgetBreakdown').textContent='Parts subtotal: '+money(base)+' • Contingency: '+money(total-base)+' ('+reserve+'%).';
+}
+function calculateGround(){
+const total=['antenna','receiver','cable','computer2'].reduce((s,id)=>s+numberValue(id),0);
+document.getElementById('groundResult').textContent='Estimated ground station total: '+money(total);
+}
+function calculateEngineering(){
+const mass=numberValue('mass'), watts=numberValue('powerdraw'), hours=numberValue('hours');
+document.getElementById('engineeringResult').textContent='Estimated energy use: '+(watts*hours).toFixed(2)+' Wh. Prototype mass: '+mass.toFixed(1)+' g.';
+}
+function updateChecks(){
+const boxes=[...document.querySelectorAll('#groundChecklist input[type=checkbox]')];
+const done=boxes.filter(b=>b.checked).length;
+document.getElementById('checkProgress').textContent='Checklist completed: '+done+' of '+boxes.length;
+document.getElementById('bar').style.width=(done/boxes.length*100)+'%';
+}
+document.querySelectorAll('.checklist input[type=checkbox]').forEach(b=>b.addEventListener('change',updateChecks));
+function downloadNotes(){
+const textContent='Royal Satellite Project Notes\n\n'+document.getElementById('notes').value+'\n\nCreated with the Royal Satellite Guide.';
+const blob=new Blob([textContent],{type:'text/plain;charset=utf-8'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');a.href=url;a.download='royal-satellite-project-notes.txt';a.click();
+URL.revokeObjectURL(url);
+}
+calculateBudget();calculateGround();calculateEngineering();updateChecks();
+</script>
+</body>
+</html>
